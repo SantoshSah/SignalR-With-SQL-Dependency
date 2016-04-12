@@ -1,0 +1,72 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="container" ng-app="myApp">
+    <div style="margin-top:10px;">
+        @Html.ActionLink("Create", "Create")
+    </div>
+    <div ng-controller="devTest" style="margin-top:20px;">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Compaingn Name</th>
+                    <th>Date</th>
+                    <th>Clicks</th>
+                    <th>Conversions</th>
+                    <th>Impressions</th>
+                    <th>AffiliateName</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="dev in devTestList">
+                    <td>{{dev.CampaignName}}</td>
+                    <td>{{formatDate(dev.Date)}}</td>
+                    <td>{{dev.Clicks}}</td>
+                    <td>{{dev.Conversions}}</td>
+                    <td>{{dev.Impressions}}</td>
+                    <td>{{dev.AffiliateName}}</td>
+                    <td>
+                    <a href="/DevTest/Edit?Id={{dev.ID}} "> Edit</a> |
+                    <a href="/DevTest/Delete?Id={{dev.ID}}">Delete</a>
+                    </td>
+                </tr>
+
+            </tbody>
+
+        </table>
+    </div>
+</div>
+
+<script src="~/Scripts/jquery.signalR-2.2.0.min.js"></script>
+<script src="~/signalr/hubs" type="text/javascript"></script>
+
+<script>
+    var app = angular.module('myApp', []);
+
+app.controller('devTest', function ($scope, $http) {
+    var devTest = $.connection.devTestHub;
+    $.connection.hub.start().done(function () {
+        //  console.log('started');
+    });
+    getRecords();
+    devTest.client.displayStatus = function () {
+        getRecords();
+    };
+
+    $scope.formatDate = function (date) {
+        return moment(date).format('MM/DD/YYYY');
+    }
+    function getRecords() {
+      $http.get('/DevTest/GetDataList')
+    .then(function (result) {
+        $scope.devTestList = result.data;
+    },
+    function (response) {
+
+    });
+    }
+});
+</script>

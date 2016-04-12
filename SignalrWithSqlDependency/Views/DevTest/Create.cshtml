@@ -1,0 +1,56 @@
+﻿<br />
+<div class="container">
+
+    @model SignalrWithSqlDependency.Models.DevTestModel
+    @using (Html.BeginForm("Save", "DevTest"))
+    {
+        @Html.ValidationSummary(true)
+        <div class="form-group">
+            <label>Compaign Name:</label>
+            @*<input type="text" class="form-control" id="compaignName">*@
+            @Html.TextBoxFor(a => a.CampaignName, new { @class = "form-control" })
+            @Html.ValidationMessageFor(a => a.CampaignName, null, new { @class = "text-danger" })
+        </div>
+        <div class="form-group">
+            <label>Date:</label>
+            @*<input type="text" class="form-control" placeholder="click to show datepicker" id="example1">*@
+            @Html.TextBoxFor(a=>a.Date ,new { @class = "form-control",@id="date"})
+            @Html.ValidationMessageFor(a=>a.Date, null, new { @class = "text-danger" })
+        </div>
+        <div class="form-group">
+            <label for="clicks">Clicks:</label>
+            @Html.TextBoxFor(a => a.Clicks, new { @class = "form-control",type = "number" })
+            @Html.ValidationMessageFor(a => a.Clicks, null, new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group">
+            <label for="conversions">Conversions:</label>
+            @Html.TextBoxFor(a => a.Conversions, new { @class = "form-control", type = "number" })
+            @Html.ValidationMessageFor(a => a.Conversions, null, new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group">
+            <label for="conversions">Impressions:</label>
+            @Html.TextBoxFor(a => a.Impressions, new { @class = "form-control", type = "number" })
+            @Html.ValidationMessageFor(a => a.Impressions, null, new { @class = "text-danger" })
+        </div>
+        <div class="form-group">
+            <label for="conversions">AffiliateName:</label>
+            @Html.TextBoxFor(a => a.AffiliateName, new { @class = "form-control" })
+            @Html.ValidationMessageFor(a => a.AffiliateName, null, new { @class = "text-danger" })
+        </div>
+        <button type="submit" class="btn btn-default">Create</button>
+
+    }
+
+</div>
+
+<script>
+   
+        $(function () {
+            $('#date').datepicker({
+                format: "mm/dd/yyyy"
+            });
+        });
+   
+</script>
